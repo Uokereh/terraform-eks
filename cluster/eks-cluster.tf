@@ -46,9 +46,9 @@ resource "aws_security_group" "demo-cluster" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
-    Name = "terraform-eks-demo"
-  }
+  # tags {
+  #   Name = "terraform-eks-demo"
+  # }
 }
 
 resource "aws_security_group_rule" "demo-cluster-ingress-node-https" {
@@ -76,8 +76,8 @@ resource "aws_eks_cluster" "demo" {
   role_arn = "${aws_iam_role.demo-cluster.arn}"
 
   vpc_config {
-    security_group_ids = ["${aws_security_group.demo-cluster.id}"]
-    subnet_ids         = ["${aws_subnet.demo.*.id}"]
+    security_group_ids = [aws_security_group.demo-cluster.id]
+    subnet_ids         = flatten([aws_subnet.demo.*.id])
   }
 
   depends_on = [
