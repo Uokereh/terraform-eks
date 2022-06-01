@@ -1,5 +1,5 @@
 provider "external" {
-  version = "~> 1.0"
+  # version = "~> 1.0"
 }
 
 data "external" "aws_iam_authenticator" {
@@ -12,7 +12,7 @@ data "external" "aws_iam_authenticator" {
 
 provider "kubernetes" {
   token = "${data.external.aws_iam_authenticator.result.token}"
-  version = "~> 1.1"
+  # version = "~> 1.1"
 }
 
 
